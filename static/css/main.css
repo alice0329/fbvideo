@@ -1,0 +1,103 @@
+html,
+body,
+div,
+button {
+    font-family: 微軟正黑體;
+}
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+}
+
+.btndiv {
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.btnm {
+    font-size: 16pt;
+    color: white;
+    background-color: #3b5998;
+    border-color: #3b5998;
+    padding: 0.5em;
+    border-radius: 6px;
+}
+
+.btnm:hover {
+    background-color: #355088;
+}
+
+.remove {
+    display: none;
+}
+
+#post {
+    height: 100%;
+    width: 100%;
+}
+
+.bg {
+    background-image: url('../photo/background.PNG');
+    height: 100%;
+    width: 95%;
+    text-align: center;
+    background-size: cover;
+    box-sizing: border-box;
+    margin: auto;
+}
+
+.bgb {
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    opacity: 0.8;
+}
+
+.cont {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+    padding-top: 18%;
+    box-sizing: border-box;
+}
+
+h2 {
+    font-size: 30pt;
+    color: white;
+}
+
+p {
+    color: white;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.albbtn {
+    background-image: url('../photo/folder.png');
+    background-size: 100%;
+    background-color: transparent;
+    border: 0px;
+    background-repeat: no-repeat;
+    padding: 5%;
+    margin: 1%;
+    font-family: 微軟正黑體;
+}
+
+.cont{
+    padding-top: 8%;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

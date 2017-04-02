@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible Node.js debug attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [{
+            "type": "node",
+            "request": "launch",
+            "name": "啟動程式",
+            "program": "${workspaceRoot}\\app.js",
+            "cwd": "${workspaceRoot}",
+            "env": {
+                "appID": "404113073292147", // Facebook 應用程式 ID
+                "appKEY": "5edda9b841a9905a986680d63c4e9953", // Facebook 應用程式 密鑰
+                "sessionKEY": "nrE8pZ67r329mrp3Eior3Jf1XOPFO3LSqPW4MJ9cVAbRtHFNc4MFLofGBFEulDMjixnvTGkh4UnmImlr43hgo53zDU5jCi83XC11t2AZGgY4hCS1iMI0N6YQB4opu4WJTAk3UldVQk2hDQvzapy8Ng9MgHRBxhicEL2JKRKoX6ccxZl9krOK4EhhP9FqdUHQ9U09Y9zCJof664P9phGZi7zMxSIKtaTz1uUJgwMjY5NduMigyKQy9BwqnXwqFqOv", // 加密字串
+                "redirect": "http://localhost:1337"
+            }
+
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "附加至處理序",
+            "address": "localhost",
+            "port": 1337
+        }
+    ]
+}
