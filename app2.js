@@ -14,10 +14,7 @@ var audioParams = {
     delay: 2 // seconds
 }
 
-var url = ['https://scontent.xx.fbcdn.net/v/t31.0-8/1274700_414957458604554_792950999_o.jpg?oh=f9e02b194e08a2cfc66a97e1588221a7&oe=595A4803',
-    'https://scontent.xx.fbcdn.net/v/t1.0-9/1392475_414957341937899_122814137_n.jpg?oh=a51835b4aeb4fec0749f1b57aed1a7a2&oe=5960A61E',
-    'https://scontent.xx.fbcdn.net/v/t1.0-9/1379687_414957298604570_189339144_n.jpg?oh=f11beeb6d2d4e8f3f9403fa36287738e&oe=599A3BCF'
-];
+var url = ['https://scontent.xx.fbcdn.net/v/t1.0-9/65025_409216692491695_1287265544_n.jpg?oh=eac9ca267889612421648138b658ac70&oe=5998FFA3', 'https://scontent.xx.fbcdn.net/v/t1.0-9/292792_389869861093045_1482726837_n.jpg?oh=d80a4489b13adbaa7955b1b4ddfb444d&oe=595AE7E8', 'https://scontent.xx.fbcdn.net/v/t1.0-9/534868_385995411480490_218411576_n.jpg?oh=bda7c1df94e9fd26fd36aead765a999e&oe=59635058'];
 
 getImage()
 async function getImage() {
@@ -66,7 +63,7 @@ function videoGen() {
         console.log(images);
         videoshow(images)
             .audio(audio, audioParams)
-            .save('./output/test.mp4')
+            .save('./output/test2.mp4')
             .on('start', function (command) {
                 console.log('ffmpeg process started:', command)
             })
