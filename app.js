@@ -3,7 +3,7 @@ var http = require('http');
 var session = require('express-session');
 var request = require('request');
 var app = express();
-var https = require('https'); 
+var https = require('https');
 var fs = require('fs');
 var request = require('request')
 const videoshow = require('videoshow')
@@ -24,6 +24,7 @@ videoshow.ffmpeg.setFfprobePath(__dirname + '/ffmpeg/ffprobe.exe')
 var audio = __dirname + '/music/About_That_Oldie.mp3'
 
 var audioParams = {
+    repeat: true,
     fade: true,
     delay: 2 // seconds
 }
@@ -139,6 +140,19 @@ async function getImage(key) {
 }
 
 function urlImage(url) {
+    //清空資料夾
+    var fileUrl = "./image";
+    var files = fs.readdirSync(fileUrl); 
+    files.forEach(function (file) {
+        var stats = fs.statSync(fileUrl + '/' + file);
+        if (stats.isDirectory()) {
+            emptyDir(fileUrl + '/' + file);
+        } else {
+            fs.unlinkSync(fileUrl + '/' + file);
+            console.log("删除文件" + fileUrl + '/' + file + "成功");
+        }
+    });
+    //下載相片
     return new Promise((resolve, reject) => {
         url.forEach(function (url_data, index, array) {
             let stream = request(url_data).pipe(fs.createWriteStream("./image/" + index + ".jpg"))
@@ -180,7 +194,7 @@ function videoGen() {
             })
             .on('end', function (output) {
                 console.log('Video created in:', output)
-                
+
                 // app.get(function(output){
                 //     console.log(output);
                 //     $("#getvedio").append('window.location = "file:///C:\Program Files\nodejs\node_modules\npm\fbapi-master\output\test.mp4"');
