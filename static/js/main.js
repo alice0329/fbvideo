@@ -86,3 +86,20 @@ function postAlbums() {
         });
     })
 }
+
+getFinish();
+function getFinish() {
+    $.get('/api/finish', function (data) {
+            console.log(data);
+        if (data.statu == 'ok') {
+            $("#albdiv").addClass('remove');
+            $("#start").html('觀看影片');
+            $("#start").click(function () {
+
+            });
+        } else {
+            console.log(123);
+            getFinish();
+        }
+    });
+}

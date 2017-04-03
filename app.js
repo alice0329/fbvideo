@@ -142,7 +142,7 @@ async function getImage(key) {
 function urlImage(url) {
     //清空資料夾
     var fileUrl = "./image";
-    var files = fs.readdirSync(fileUrl); 
+    var files = fs.readdirSync(fileUrl);
     files.forEach(function (file) {
         var stats = fs.statSync(fileUrl + '/' + file);
         if (stats.isDirectory()) {
@@ -194,11 +194,17 @@ function videoGen() {
             })
             .on('end', function (output) {
                 console.log('Video created in:', output)
-
-                // app.get(function(output){
-                //     console.log(output);
-                //     $("#getvedio").append('window.location = "file:///C:\Program Files\nodejs\node_modules\npm\fbapi-master\output\test.mp4"');
-                // });
+                
+                app.get('/api/finish', function (req, res) {
+                    console.log(123);
+                    var re;
+                        re = {
+                            statu: 'ok',
+                            output: output
+                        };
+                    res.setHeader('Content-Type', 'application/json');
+                    res.end(JSON.stringify(re));
+                });
             })
     });
 }
