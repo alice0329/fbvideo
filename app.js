@@ -82,9 +82,9 @@ app.get('/api/albums', (req, res) => {
 
 app.get('/api/create', (req, res) => {
     getPhotos(req.session.key, req.query.id).then((data) => {
-        getImage(data);
-        res.setHeader('Content-Type', 'application/json');
-        res.end("");
+        getImage(data, res);
+        // res.setHeader('Content-Type', 'application/json');
+        // res.end("");
     });
 });
 
@@ -125,7 +125,7 @@ function getPhotos(key, id) {
     });
 }
 
-async function getImage(key) {
+async function getImage(key, res) {
     try {
         //console.log(key);
         await urlImage(key)
@@ -133,7 +133,7 @@ async function getImage(key) {
             //console.log('xxx')
             await imageResize("./image/" + i + ".jpg", 960, 720)
         }
-        videoGen()
+        videoGen(res)
     } catch (e) {
         console.log(e)
     }
@@ -175,7 +175,7 @@ function imageResize(imgPath, width, height) {
 }
 
 //製作影片
-function videoGen() {
+function videoGen(res) {
     var images = [];
     fs.readdir(__dirname + '/image', function (err, files) {
         if (err) return;
@@ -197,16 +197,13 @@ function videoGen() {
             .on('end', function (output) {
                 console.log('Video created in:', output)
 
-                app.get('/api/finish', function (req, res) {
-                    console.log(123);
-                    var re;
-                        re = {
-                            statu: 'ok',
-                            output: output
-                        };
-                    res.setHeader('Content-Type', 'application/json');
-                    res.end(JSON.stringify(re));
-                });
+                var re;
+                re = {
+                    statu: 'ok',
+                    output: output
+                };
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify(re));
             })
     });
 }

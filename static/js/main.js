@@ -39,24 +39,32 @@ function postAlbums() {
             }
             var req_id = this.getAttribute("value");
             //console.log(req_id);
-            $.get('/api/create?id=' + req_id);
+            $.get('/api/create?id=' + req_id, function (data) {
+                console.log(data);
+                if (data.statu == 'ok') {
+                    $("#albdiv").addClass('remove');
+                    $("#start").html('觀看影片');
+                    $("#start").click(function () {
+
+                    });
+                } else {
+                    console.log(123);
+                }
+            });
+
         });
     })
 }
 
-getFinish();
-function getFinish() {
-    $.get('/api/finish', function (data) {
-            console.log(data);
-        if (data.statu == 'ok') {
-            $("#albdiv").addClass('remove');
-            $("#start").html('觀看影片');
-            $("#start").click(function () {
+// $.get('/api/create', function (data) {
+//     console.log(data);
+//     if (data.statu == 'ok') {
+//         $("#albdiv").addClass('remove');
+//         $("#start").html('觀看影片');
+//         $("#start").click(function () {
 
-            });
-        } else {
-            console.log(123);
-            getFinish();
-        }
-    });
-}
+//         });
+//     } else {
+//         console.log(123);
+//     }
+// });
