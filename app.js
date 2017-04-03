@@ -180,8 +180,11 @@ function videoGen() {
             })
             .on('end', function (output) {
                 console.log('Video created in:', output)
-                var getFinish = require('../static/js/main.js')
-                getFinish.getFinish(output);
+                
+                // app.get(function(output){
+                //     console.log(output);
+                //     $("#getvedio").append('window.location = "file:///C:\Program Files\nodejs\node_modules\npm\fbapi-master\output\test.mp4"');
+                // });
             })
     });
 }

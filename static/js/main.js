@@ -86,8 +86,3 @@ function postAlbums() {
         });
     })
 }
-
-function getFinish(data) {
-    console.log(data);
-    window.location = data;
-}
