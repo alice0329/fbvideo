@@ -163,6 +163,7 @@ function urlImage(url) {
     })
 }
 
+//改變圖片大小
 function imageResize(imgPath, width, height) {
     return new Promise((resolve, reject) => {
         jimp.read(imgPath).then((image) => {
@@ -173,6 +174,7 @@ function imageResize(imgPath, width, height) {
     })
 }
 
+//製作影片
 function videoGen() {
     var images = [];
     fs.readdir(__dirname + '/image', function (err, files) {
@@ -194,7 +196,7 @@ function videoGen() {
             })
             .on('end', function (output) {
                 console.log('Video created in:', output)
-                
+
                 app.get('/api/finish', function (req, res) {
                     console.log(123);
                     var re;
