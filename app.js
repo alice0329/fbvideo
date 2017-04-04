@@ -87,7 +87,7 @@ app.get('/api/create', (req, res) => {
     });
 });
 
-/* 讀相簿列表 */
+/* 讀粉絲頁 */
 function getAlbums(key) {
     return new Promise((resolve, reject) => {
         var qs = {
