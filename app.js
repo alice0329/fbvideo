@@ -199,7 +199,7 @@ function videoGen(res) {
         console.log(images);
         videoshow(images, videoOptions)
             .audio(audio, audioParams)
-            .save('./output/vedio.mp4')
+            .save('./static/output/vedio.mp4')
             .on('start', function (command) {
                 console.log('ffmpeg process started:', command)
             })
@@ -208,12 +208,10 @@ function videoGen(res) {
             })
             .on('end', function (output) {
                 console.log('Video created in:', output)
-
-                __dirname = __dirname.replace(" ", "%20");
                 var re;
                 re = {
                     statu: 'ok',
-                    output: 'file:///' + __dirname + '/output/vedio.mp4'
+                    output: '/output/vedio.mp4'
                 };
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(re));
