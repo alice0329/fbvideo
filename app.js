@@ -24,7 +24,6 @@ videoshow.ffmpeg.setFfprobePath(__dirname + '/ffmpeg/ffprobe.exe')
 var audio = __dirname + '/music/About_That_Oldie.mp3'
 
 var audioParams = {
-    repeat: true,
     fade: true,
     delay: 2 // seconds
 }
@@ -174,6 +173,19 @@ function imageResize(imgPath, width, height) {
     })
 }
 
+var videoOptions = {
+    fps: 25,
+    loop: 5, // seconds
+    transition: true,
+    transitionDuration: 1, // seconds
+    videoBitrate: 1024,
+    videoCodec: 'libx264',
+    size: '640x?',
+    audioBitrate: '128k',
+    audioChannels: 2,
+    format: 'mp4',
+    pixelFormat: 'yuv420p'
+}
 //製作影片
 function videoGen(res) {
     var images = [];
@@ -185,9 +197,9 @@ function videoGen(res) {
             return images;
         });
         console.log(images);
-        videoshow(images)
+        videoshow(images, videoOptions)
             .audio(audio, audioParams)
-            .save('./output/test2.mp4')
+            .save('./output/vedio.mp4')
             .on('start', function (command) {
                 console.log('ffmpeg process started:', command)
             })
@@ -197,10 +209,11 @@ function videoGen(res) {
             .on('end', function (output) {
                 console.log('Video created in:', output)
 
+                __dirname = __dirname.replace(" ", "%20");
                 var re;
                 re = {
                     statu: 'ok',
-                    output: output
+                    output: 'file:///' + __dirname + '/output/vedio.mp4'
                 };
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(re));

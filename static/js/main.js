@@ -33,38 +33,21 @@ function postAlbums() {
         }
         $("#albdiv").html(albums_data);
         $(".albbtn").click(function () {
-            if (!gettingPost) {
-                gettingPost = true;
-                $("#start").html('正在讀取資料...');
-            }
+            $("#albdiv").addClass('remove');
+            $("#start").html('正在讀取資料...');
             var req_id = this.getAttribute("value");
             //console.log(req_id);
             $.get('/api/create?id=' + req_id, function (data) {
                 console.log(data);
                 if (data.statu == 'ok') {
-                    $("#albdiv").addClass('remove');
                     $("#start").html('觀看影片');
                     $("#start").click(function () {
-
+                        $("#post").removeClass('remove');
                     });
                 } else {
-                    console.log(123);
+                    console.log(err);
                 }
             });
-
         });
     })
 }
-
-// $.get('/api/create', function (data) {
-//     console.log(data);
-//     if (data.statu == 'ok') {
-//         $("#albdiv").addClass('remove');
-//         $("#start").html('觀看影片');
-//         $("#start").click(function () {
-
-//         });
-//     } else {
-//         console.log(123);
-//     }
-// });
