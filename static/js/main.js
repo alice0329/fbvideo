@@ -40,9 +40,10 @@ function postAlbums() {
             $.get('/api/create?id=' + req_id, function (data) {
                 console.log(data);
                 if (data.statu == 'ok') {
-                    $("#start").html('觀看影片');
-                    $("#start").click(function () {
-                        $("#post").removeClass('remove');
+                    $("#post").removeClass('remove');
+                    $("#post").html('<video width="100%" height="95%" controls><source src="/output/vedio.mp4" type="video/mp4"></video>');
+                    $('html, body').animate({
+                        scrollTop: $("#post").offset().top
                     });
                 } else {
                     console.log(err);

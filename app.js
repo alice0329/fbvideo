@@ -21,13 +21,6 @@ app.use(session({
 videoshow.ffmpeg.setFfmpegPath(__dirname + '/ffmpeg/ffmpeg.exe')
 videoshow.ffmpeg.setFfprobePath(__dirname + '/ffmpeg/ffprobe.exe')
 
-var audio = __dirname + '/music/About_That_Oldie.mp3'
-
-var audioParams = {
-    fade: true,
-    delay: 2 // seconds
-}
-
 // 通訊埠，放在 Azure 上會開啟預設 80 號，我們在 local server 先使用 1337 
 var port = process.env.port || 1337;
 // 放靜態資源，也就是我們主要 html js 等等前端的東西
@@ -186,6 +179,12 @@ var videoOptions = {
     format: 'mp4',
     pixelFormat: 'yuv420p'
 }
+
+var audioParams = {
+    fade: true,
+    delay: 2 // seconds
+}
+
 //製作影片
 function videoGen(res) {
     var images = [];
@@ -197,9 +196,10 @@ function videoGen(res) {
             return images;
         });
         console.log(images);
+        var audio = __dirname + '/music/About_That_Oldie.mp3'
         videoshow(images, videoOptions)
             .audio(audio, audioParams)
-            .save('./output/vedio.mp4')
+            .save('./static/output/vedio.mp4')
             .on('start', function (command) {
                 console.log('ffmpeg process started:', command)
             })
@@ -208,12 +208,9 @@ function videoGen(res) {
             })
             .on('end', function (output) {
                 console.log('Video created in:', output)
-
-                __dirname = __dirname.replace(" ", "%20");
                 var re;
                 re = {
                     statu: 'ok',
-                    output: 'file:///' + __dirname + '/output/vedio.mp4'
                 };
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(re));
