@@ -211,6 +211,10 @@ function videoGen(res) {
                 var re;
                 re = {
                     statu: 'ok',
+<<<<<<< HEAD
+=======
+                    output: '/output/vedio.mp4'
+>>>>>>> f9ded82b98004d48990cd0491ade379f46a893d5
                 };
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(re));
