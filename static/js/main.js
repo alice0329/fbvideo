@@ -41,7 +41,7 @@ function postAlbums() {
                 console.log(data);
                 if (data.statu == 'ok') {
                     $("#post").removeClass('remove');
-                    $("#post").html('<video width="100%" height="95%" controls><source src="/output/vedio.mp4" type="video/mp4"></video>');
+                    $("#post").html('<video width="100%" height="95%" controls><source src="/output/video.mp4" type="video/mp4"></video>');
                     $('html, body').animate({
                         scrollTop: $("#post").offset().top
                     });

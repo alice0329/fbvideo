@@ -6,8 +6,8 @@ var app = express();
 var https = require('https');
 var fs = require('fs');
 var request = require('request')
-const videoshow = require('videoshow')
-const jimp = require('jimp')
+var videoshow = require('videoshow')
+var jimp = require('jimp')
 
 app.use(session({
     secret: process.env.sessionKEY,
@@ -120,31 +120,37 @@ function getPhotos(key, id) {
 async function getImage(key, res) {
     try {
         //console.log(key);
-        await urlImage(key)
+        await clearFolder();
+        await urlImage(key);
         for (let i = 0; i < key.length; i++) {
             //console.log('xxx')
-            await imageResize("./image/" + i + ".jpg", 960, 720)
+            await imageResize("./image/" + i + ".jpg", 960, 720);
         }
-        videoGen(res)
+        videoGen(res);
     } catch (e) {
-        console.log(e)
+        console.log(e);
     }
 }
-
-function urlImage(url) {
-    //清空資料夾
-    var fileUrl = "./image";
-    var files = fs.readdirSync(fileUrl);
-    files.forEach(function (file) {
-        var stats = fs.statSync(fileUrl + '/' + file);
-        if (stats.isDirectory()) {
-            emptyDir(fileUrl + '/' + file);
-        } else {
-            fs.unlinkSync(fileUrl + '/' + file);
-            console.log("删除文件" + fileUrl + '/' + file + "成功");
+//清空資料夾
+function clearFolder() {  
+    return new Promise((resolve, reject) => {
+        var fileUrl = "./image";
+        if(fs.existsSync(fileUrl)){
+            var files = fs.readdirSync(fileUrl);
+            files.forEach(function (file) {
+                fs.unlinkSync(fileUrl + '/' + file);
+                console.log("删除文件" + fileUrl + '/' + file + "成功");
+            });
         }
-    });
-    //下載相片
+        else{
+            fs.mkdirSync(fileUrl);
+        }      
+        resolve();
+    })
+}
+
+//下載相片
+function urlImage(url) {   
     return new Promise((resolve, reject) => {
         url.forEach(function (url_data, index, array) {
             let stream = request(url_data).pipe(fs.createWriteStream("./image/" + index + ".jpg"))
@@ -199,7 +205,7 @@ function videoGen(res) {
         var audio = __dirname + '/music/About_That_Oldie.mp3'
         videoshow(images, videoOptions)
             .audio(audio, audioParams)
-            .save('./static/output/vedio.mp4')
+            .save('./static/output/video.mp4')
             .on('start', function (command) {
                 console.log('ffmpeg process started:', command)
             })
