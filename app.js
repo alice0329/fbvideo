@@ -5,9 +5,9 @@ var request = require('request');
 var app = express();
 var https = require('https');
 var fs = require('fs');
-var request = require('request')
 var videoshow = require('videoshow')
-var jimp = require('jimp')
+var sharp = require('sharp')
+
 
 app.use(session({
     secret: process.env.sessionKEY,
@@ -80,7 +80,7 @@ app.get('/api/create', (req, res) => {
     });
 });
 
-/* 讀粉絲頁 */
+/* 讀相簿 */
 function getAlbums(key) {
     return new Promise((resolve, reject) => {
         var qs = {
@@ -124,7 +124,7 @@ async function getImage(key, res) {
         await urlImage(key);
         for (let i = 0; i < key.length; i++) {
             //console.log('xxx')
-            await imageResize("./image/" + i + ".jpg", 960, 720);
+            await imageResize("./image/" + i + ".jpg", "./image_resized/" + i + ".jpg", 960, 720);
         }
         videoGen(res);
     } catch (e) {
@@ -135,6 +135,7 @@ async function getImage(key, res) {
 function clearFolder() {  
     return new Promise((resolve, reject) => {
         var fileUrl = "./image";
+        var fileUrl2 = "./image_resized";
         if(fs.existsSync(fileUrl)){
             var files = fs.readdirSync(fileUrl);
             files.forEach(function (file) {
@@ -144,7 +145,17 @@ function clearFolder() {
         }
         else{
             fs.mkdirSync(fileUrl);
-        }      
+        }     
+        if(fs.existsSync(fileUrl2)){
+            var files = fs.readdirSync(fileUrl2);
+            files.forEach(function (file) {
+                fs.unlinkSync(fileUrl2 + '/' + file);
+                console.log("删除文件" + fileUrl2 + '/' + file + "成功");
+            });
+        }
+        else{
+            fs.mkdirSync(fileUrl2);
+        } 
         resolve();
     })
 }
@@ -162,13 +173,14 @@ function urlImage(url) {
 }
 
 //改變圖片大小
-function imageResize(imgPath, width, height) {
+function imageResize(imgPath, imgPath_resized, width, height) {
     return new Promise((resolve, reject) => {
-        jimp.read(imgPath).then((image) => {
-            image.resize(960, 720).write(imgPath)
-        }).catch((err) => {
-            console.log(err)
-        }).then(() => resolve())
+        sharp(imgPath)
+        .resize(960, 720)
+        .ignoreAspectRatio()
+        .toFile(imgPath_resized, (err, info) =>{
+            resolve()
+        });
     })
 }
 
@@ -194,10 +206,10 @@ var audioParams = {
 //製作影片
 function videoGen(res) {
     var images = [];
-    fs.readdir(__dirname + '/image', function (err, files) {
+    fs.readdir(__dirname + '/image_resized', function (err, files) {
         if (err) return;
         files.forEach(function (f) {
-            images.push(__dirname + '/image/' + f);
+            images.push(__dirname + '/image_resized/' + f );
             //console.log('Files: ' + f);
             return images;
         });
