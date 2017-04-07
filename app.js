@@ -3,7 +3,6 @@ var http = require('http');
 var session = require('express-session');
 var request = require('request');
 var app = express();
-var https = require('https');
 var fs = require('fs');
 var videoshow = require('videoshow')
 var sharp = require('sharp')
